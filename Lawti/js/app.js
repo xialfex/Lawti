@@ -6,6 +6,7 @@ let currentIndex = 0;
 let answers = {};
 let startTime = 0;
 
+/* ---------- 答题页 ---------- */
 async function initTestPage() {
   try {
     const data = await API.loadQuestions();
@@ -85,11 +86,13 @@ function nextQuestion() {
     currentIndex++;
     renderQuestion();
   } else {
+    // 最后一题，保存答案并跳转
     API.saveCurrentAnswers(answers);
     window.location.href = 'result.html';
   }
 }
 
+/* ---------- 结果页 ---------- */
 async function initResultPage() {
   try {
     const answersData = API.getCurrentAnswers();
@@ -109,9 +112,11 @@ async function initResultPage() {
       return;
     }
 
+    // 计算用时
     const st = API.getStartTime();
     const duration = st ? Math.round((Date.now() - st) / 1000) : 0;
 
+    // 保存完整记录（本地 + 云端）
     await API.saveRecord({
       session_id: 'S' + Date.now(),
       answers: answersData,
@@ -149,6 +154,7 @@ function renderResult(p, result) {
   document.getElementById('resCatchphrase').innerText = p.catchphrase;
   document.getElementById('resLaw').innerText = p.lawExample;
 
+  // 填充海报内容
   document.getElementById('pCode').innerText = p.code;
   document.getElementById('pName').innerText = '「' + p.name + '」';
   document.getElementById('pSchool').innerText = p.school;
@@ -156,6 +162,7 @@ function renderResult(p, result) {
   document.getElementById('pShareText').innerText = p.summary.slice(0, 60) + '…';
 }
 
+/* ---------- 数据页 ---------- */
 function renderDataPage() {
   const records = API.getRecords();
   const tableArea = document.getElementById('tableArea');
@@ -222,6 +229,7 @@ function exportCSV() {
   link.click();
 }
 
+/* ---------- 错误提示 ---------- */
 function showError(page, msg) {
   const loading = document.getElementById('loadingArea');
   const err = document.getElementById('errorArea');
