@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据后台 · Lawti</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+  <div class="data-header">
+    <div class="data-title">Lawti 数据后台</div>
+    <a href="index.html" style="font-size:13px;color:#6B6B6B;text-decoration:none;">← 返回首页</a>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num" id="statTotal">0</div>
+      <div class="stat-label">总测试数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statAvg">0s</div>
+      <div class="stat-label">平均用时</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statTypes">0</div>
+      <div class="stat-label">人格种类</div>
+    </div>
+  </div>
+
+  <div id="tableArea"></div>
+
+  <div style="text-align:center;">
+    <button class="btn-export" onclick="exportCSV()">导出 CSV</button>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+  renderDataPage();
+</script>
+</body>
+</html>

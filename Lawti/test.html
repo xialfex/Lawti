@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>答题中 · Lawti</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+  <div class="test-header">
+    <div class="logo-sm">Lawti</div>
+    <div class="progress-text" id="progressText">第 1 题 / 共 12 题</div>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <div id="loadingArea" class="loading">正在加载题库…</div>
+
+  <div id="questionArea" style="display:none;">
+    <div class="question-card">
+      <div class="scene-tag" id="sceneTag"></div>
+      <div class="question-stem" id="questionStem"></div>
+      <div class="options" id="optionsBox"></div>
+    </div>
+    <div class="test-nav">
+      <button class="btn-nav btn-prev" id="btnPrev" onclick="prevQuestion()">上一题</button>
+      <button class="btn-nav btn-next" id="btnNext" onclick="nextQuestion()" disabled>下一题</button>
+    </div>
+  </div>
+
+  <div id="errorArea" style="display:none;"></div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/app.js"></script>
+<script>
+  initTestPage();
+</script>
+</body>
+</html>
