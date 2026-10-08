@@ -3,15 +3,15 @@
 let QUESTIONS = [];
 let PERSONALITIES = {};
 let currentIndex = 0;
-let answers = {};      // { qid: { dim, letter } }
+let answers = {};
 let startTime = 0;
 
-/* ---------- 答题页 ---------- */
 async function initTestPage() {
   try {
     const data = await API.loadQuestions();
     QUESTIONS = data.questions;
     startTime = Date.now();
+    API.saveStartTime(startTime);
     renderQuestion();
   } catch (e) {
     showError('test', e.message + '。请确认使用 Live Server 或本地服务器打开，不要直接双击 HTML 文件。');
@@ -85,29 +85,15 @@ function nextQuestion() {
     currentIndex++;
     renderQuestion();
   } else {
-    // 最后一题，提交
     API.saveCurrentAnswers(answers);
-    const result = calculateResult(answers);
-    const duration = Math.round((Date.now() - startTime) / 1000);
-
-    API.saveRecord({
-      session_id: 'S' + Date.now(),
-      answers: answers,
-      result_code: result.code,
-      result_name: '',   // 结果页补
-      duration: duration,
-      created_at: new Date().toISOString()
-    });
-
     window.location.href = 'result.html';
   }
 }
 
-/* ---------- 结果页 ---------- */
 async function initResultPage() {
   try {
-    const answers = API.getCurrentAnswers();
-    if (!answers || Object.keys(answers).length === 0) {
+    const answersData = API.getCurrentAnswers();
+    if (!answersData || Object.keys(answersData).length === 0) {
       showError('result', '没有找到测试记录，请先完成测试。');
       return;
     }
@@ -115,7 +101,7 @@ async function initResultPage() {
     const data = await API.loadPersonalities();
     PERSONALITIES = data.types;
 
-    const result = calculateResult(answers);
+    const result = calculateResult(answersData);
     const p = PERSONALITIES[result.code];
 
     if (!p) {
@@ -123,12 +109,17 @@ async function initResultPage() {
       return;
     }
 
-    // 更新记录中的人格名称
-    const records = API.getRecords();
-    if (records.length > 0) {
-      records[records.length - 1].result_name = p.name;
-      localStorage.setItem('lawti_records', JSON.stringify(records));
-    }
+    const st = API.getStartTime();
+    const duration = st ? Math.round((Date.now() - st) / 1000) : 0;
+
+    await API.saveRecord({
+      session_id: 'S' + Date.now(),
+      answers: answersData,
+      result_code: result.code,
+      result_name: p.name,
+      duration: duration,
+      created_at: new Date().toISOString()
+    });
 
     renderResult(p, result);
   } catch (e) {
@@ -158,7 +149,6 @@ function renderResult(p, result) {
   document.getElementById('resCatchphrase').innerText = p.catchphrase;
   document.getElementById('resLaw').innerText = p.lawExample;
 
-  // 填充海报内容
   document.getElementById('pCode').innerText = p.code;
   document.getElementById('pName').innerText = '「' + p.name + '」';
   document.getElementById('pSchool').innerText = p.school;
@@ -166,7 +156,6 @@ function renderResult(p, result) {
   document.getElementById('pShareText').innerText = p.summary.slice(0, 60) + '…';
 }
 
-/* ---------- 数据页 ---------- */
 function renderDataPage() {
   const records = API.getRecords();
   const tableArea = document.getElementById('tableArea');
@@ -233,7 +222,6 @@ function exportCSV() {
   link.click();
 }
 
-/* ---------- 错误提示 ---------- */
 function showError(page, msg) {
   const loading = document.getElementById('loadingArea');
   const err = document.getElementById('errorArea');
