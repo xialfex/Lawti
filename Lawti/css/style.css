@@ -610,6 +610,33 @@ body {
   margin: 20px 0;
 }
 
+/* ===== 测试版提示 ===== */
+.notice-box {
+  margin-top: 30px;
+  padding: 16px 20px;
+  background: #FFF9E6;
+  border: 1px solid #F0D98C;
+  border-radius: 12px;
+  text-align: left;
+}
+
+.notice-inline {
+  margin-top: 40px;
+}
+
+.notice-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #8B6F00;
+  margin-bottom: 6px;
+}
+
+.notice-text {
+  font-size: 13px;
+  color: #7A6520;
+  line-height: 1.8;
+}
+
 /* ===== 移动端 ===== */
 @media (max-width: 480px) {
   .page { padding: 16px 16px 40px; }

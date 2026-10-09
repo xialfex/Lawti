@@ -49,6 +49,13 @@
       <button class="btn-share" onclick="generatePoster()">生成分享海报</button>
       <a href="index.html" class="btn-restart">重新测试</a>
     </div>
+
+    <div class="notice-box notice-inline">
+      <div class="notice-title">⚠️ 测试版提示</div>
+      <div class="notice-text">
+        本网站为大学生创新训练项目测试版，所有内容仅供学习参考，不构成正式法律意见。项目仍在持续完善中，欢迎反馈建议。
+      </div>
+    </div>
   </div>
 
   <div id="errorArea" style="display:none;"></div>
@@ -64,7 +71,92 @@
     <div class="poster-school" id="pSchool"></div>
     <div class="poster-slogan" id="pSlogan"></div>
     <div class="poster-share-text" id="pShareText"></div>
-    <div class="poster-footer">上海政法学院 · Lawti创新工坊</div>
+    <div class="poster-footer">大学生创新训练项目 · 测试版</div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/app.js"></script>
+<script src="js/poster.js"></script>
+<script>
+  initResultPage();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>测试结果 · Lawti</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+<div class="page">
+  <div id="loadingArea" class="loading">正在生成你的法律人格…</div>
+
+  <div id="resultArea" style="display:none;">
+    <div class="result-header">
+      <div class="result-code" id="resCode"></div>
+      <div class="result-name" id="resName"></div>
+      <div class="result-school" id="resSchool"></div>
+      <div class="result-slogan" id="resSlogan"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="section-title">你的法律人格画像</div>
+      <div class="section-text" id="resSummary"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="section-title">给你的3条法律成长建议</div>
+      <ul class="advice-list" id="resAdvice"></ul>
+    </div>
+
+    <div class="result-section">
+      <div class="section-title">知识加油站</div>
+      <div class="knowledge-item">
+        <div class="knowledge-label">法学偶像</div>
+        <div class="knowledge-value" id="resIdols"></div>
+      </div>
+      <div class="knowledge-item">
+        <div class="knowledge-label">口头禅</div>
+        <div class="knowledge-value" id="resCatchphrase"></div>
+      </div>
+      <div class="knowledge-item">
+        <div class="knowledge-label">法律实例</div>
+        <div class="knowledge-value" id="resLaw"></div>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-share" onclick="generatePoster()">生成分享海报</button>
+      <a href="index.html" class="btn-restart">重新测试</a>
+    </div>
+
+    <div class="notice-box notice-inline">
+      <div class="notice-title">⚠️ 测试版提示</div>
+      <div class="notice-text">
+        本网站为大学生创新训练项目测试版，所有内容仅供学习参考，不构成正式法律意见。项目仍在持续完善中，欢迎反馈建议。
+      </div>
+    </div>
+  </div>
+
+  <div id="errorArea" style="display:none;"></div>
+</div>
+
+<!-- 海报隐藏容器 -->
+<div id="poster-wrap">
+  <div class="poster" id="posterContent">
+    <div class="poster-logo">Lawti</div>
+    <div class="poster-tagline">法律人格测试 · 趣味普法</div>
+    <div class="poster-code" id="pCode"></div>
+    <div class="poster-name" id="pName"></div>
+    <div class="poster-school" id="pSchool"></div>
+    <div class="poster-slogan" id="pSlogan"></div>
+    <div class="poster-share-text" id="pShareText"></div>
+    <div class="poster-footer">大学生创新训练项目 · 测试版</div>
   </div>
 </div>
 
